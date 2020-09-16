@@ -11,10 +11,10 @@
     <link rel="shortcut icon" href="img/favicon.png">
     <title>Sistema Libros</title>
     <!-- Icons -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/simple-line-icons.min.css" rel="stylesheet">
+    {{-- <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/simple-line-icons.min.css" rel="stylesheet"> --}}
     <!-- Main styles for this application -->
-    <link href="css/style.css" rel="stylesheet">
+    <link  rel="stylesheet" href="css/plantilla.css">
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -56,8 +56,8 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    <span class="d-md-down-none">admin </span>
+                    <img src="img/avatars/6.jpg" class="img-avatar" alt="adsi@.com.co">
+                    <span class="d-md-down-none">Javier </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
@@ -84,29 +84,38 @@
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> General</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Categorías</a>
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Autores</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Otros</a>
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Categorias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Editoriales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Idiomas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Paises</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Otros</a>
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Registro</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="i#"><i class="icon-wallet"></i> Otros</a>
+                                <a class="nav-link" href="i#"><i class="icon-wallet"></i> Libros</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-notebook"></i> Otros</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item nav-dropdown">
+                    {{-- <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-basket"></i> Otros</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i> Otros</a>
+                                <a class="nav-link" href="i#"><i class="icon-basket-loaded"></i> Nombre</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-notebook"></i> Otros</a>
@@ -117,10 +126,21 @@
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-people"></i> Otros</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="i#"><i class="icon-user"></i> Otros</a>
+                                <a class="nav-link" href="i#"><i class="icon-user"></i> Nombre</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-user-following"></i> Otros</a>
+                            </li>
+                        </ul>
+                    </li> --}}
+                    {{-- <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Otros</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="i#"><i class="icon-chart"></i> Nombre</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-chart"></i> Otros</a>
                             </li>
                         </ul>
                     </li>
@@ -128,13 +148,13 @@
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Otros</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="i#"><i class="icon-chart"></i> Otros</a>
+                                <a class="nav-link" href="i#"><i class="icon-chart"></i> Nombre</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-chart"></i> Otros</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" href="main.html"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
                     </li>
@@ -158,8 +178,8 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Categorías
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalNuevo">
+                        <i class="fa fa-align-justify"></i> Libros
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
@@ -357,18 +377,21 @@
 
     <footer class="app-footer">
         <span><a href="http://www.ADSI.com/">ADSI</a> &copy; 2020</span>
-        <span class="ml-auto">Desarrollado por <a href="http://www.ADSI.com/">ADSI</a></span>
+        <span class="ml-auto">Desarrollado por <a href="http://www.ADSI.com/">JAVIERSPINOZA</a></span>
     </footer>
 
     <!-- Bootstrap and necessary plugins -->
-    <script src="js/jquery.min.js"></script>
+
+    <script src="js/plantilla.js"></script>
+
+    {{-- <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/pace.min.js"></script>
     <!-- Plugins and scripts required by all views -->
     <script src="js/Chart.min.js"></script>
     <!-- GenesisUI main scripts -->
-    <script src="js/template.js"></script>
+    <script src="js/template.js"></script> --}}
 </body>
 
 </html>
