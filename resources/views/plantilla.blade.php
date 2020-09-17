@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" >
-    <title>Hello, world!</title>
+    <title>Spinoza!</title>
   </head>
   <body>
     <h1>Hello, world!</h1>
