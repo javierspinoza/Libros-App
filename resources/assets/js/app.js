@@ -16,6 +16,10 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('categoria', require('./components/Categoria.vue'));
+Vue.component('editorial', require('./components/Editorial.vue'));
+Vue.component('idioma', require('./components/Idioma.vue'));
+Vue.component('pais', require('./components/Pais.vue'));
 
 const app = new Vue({
     el: '#app'

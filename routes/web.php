@@ -15,6 +15,18 @@
 Route::get('/', function () {
     return view('principal');
 });
+Route::get('/', function () {
+    return view('contenido/categoria');
+});
+Route::get('/editorial', function () {
+    return view('contenido/editorial');
+});
+Route::get('/idioma', function () {
+    return view('contenido/idioma');
+});
+Route::get('/pais', function () {
+    return view('contenido/pais');
+});
 route::get('plantilla', function () {
     return view('plantilla');
 });
