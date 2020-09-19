@@ -12,7 +12,7 @@
         <!-- Ejemplo de tabla Listado -->
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-address-book"></i> Libros
+                <i class="fa fa-book"></i> Editorial
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
                     <i class="icon-plus"></i>&nbsp;Agregar
                 </button>

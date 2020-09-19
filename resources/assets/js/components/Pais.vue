@@ -12,7 +12,7 @@
         <!-- Ejemplo de tabla Listado -->
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-address-book"></i> Pais
+                <i class="fas fa-building"></i> Pais
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
                     <i class="icon-plus"></i>&nbsp;Agregar
                 </button>

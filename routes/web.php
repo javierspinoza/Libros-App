@@ -12,23 +12,19 @@
 */
 // ::::::::::::::
 // 1. creo las rutas
+// Route::get('/', function () {
+//     return view('principal');
+// });
 Route::get('/', function () {
-    return view('principal');
-});
-Route::get('/', function () {
-    return view('contenido/categoria');
-});
-Route::get('/editorial', function () {
-    return view('contenido/editorial');
-});
-Route::get('/idioma', function () {
-    return view('contenido/idioma');
-});
-Route::get('/pais', function () {
-    return view('contenido/pais');
-});
-route::get('plantilla', function () {
-    return view('plantilla');
+    return view('contenido/contenido');
 });
 
+Route::get('categoria','CategoriaController@index');
 
+Route::get('editorial','EditorialController@index');
+
+Route::get('idioma','IdiomaController@index');
+
+Route::get('pais','PaisController@index');
+
+Route::get('autor','AutorController@index');

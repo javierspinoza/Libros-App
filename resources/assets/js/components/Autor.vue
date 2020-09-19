@@ -11,11 +11,11 @@
         <!-- Ejemplo de tabla Listado -->
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-language"></i> Idioma
+                <i class="fa fa-user-secret"></i> Autor
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
                     <i class="icon-plus"></i>&nbsp;Agregar
                 </button>
-            </div>
+            </div>            
             <div class="card-body" >
                 <div class="form-group row">
                     <div class="col-md-6">
@@ -32,12 +32,14 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>                                   
+                            <th>Pais</th>                                   
                             <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Ingles</td>
+                            <td>Pedro</td>
+                            <td>Colombia</td>
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
                                   <i class="icon-pencil"></i>
@@ -80,7 +82,7 @@
         <div class="modal-dialog modal-primary modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Agregar idioma</h4>
+                    <h4 class="modal-title">Agregar autor</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">X</span>
                     </button>
@@ -90,10 +92,20 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                             <div class="col-md-9">
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de idioma">
-                                <span class="help-block">(*) Ingrese el nombre del idioma</span>
+                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre del autor">
+                                <span class="help-block">(*) Ingrese el nombre del autor</span>
                             </div>
-                        </div>                                
+                        </div> 
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="text-input">Pais</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="id_pais">
+                                    <option>Seleccione una opción</option>
+                                    <option>Colombia</option>
+                                    <span class="help-block">(*) Seleccione el pais del autor</span>
+                                </select>
+                            </div>
+                        </div>                                                        
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -111,13 +123,13 @@
         <div class="modal-dialog modal-danger" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Eliminar idioma</h4>
+                    <h4 class="modal-title">Eliminar autor</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Estas seguro de eliminar la idioma?</p>
+                    <p>Estas seguro de eliminar el autor?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

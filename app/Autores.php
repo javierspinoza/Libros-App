@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Autore extends Model
+class Autores extends Model
 {
     //
 }
