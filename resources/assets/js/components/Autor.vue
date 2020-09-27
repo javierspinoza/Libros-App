@@ -37,14 +37,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Pedro</td>
-                            <td>Colombia</td>
+                        <tr v-for="objeto in arrayDatos" :key="objeto.id">
+                            <td v-text="objeto.nombre"></td>
+                            <td v-text="objeto.id_pais"></td>
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
                                   <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" @click="eliminarAutor(objeto)">
                                   <i class="icon-trash"></i>
                                 </button>
                             </td>                                                                        
@@ -92,14 +92,14 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                             <div class="col-md-9">
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre del autor">
+                                <input type="text" v-model="nombre" id="nombre" name="nombre" class="form-control" placeholder="Nombre del autor">
                                 <span class="help-block">(*) Ingrese el nombre del autor</span>
                             </div>
                         </div> 
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="text-input">Pais</label>
                             <div class="col-md-9">
-                                <select class="form-control" name="id_pais">
+                                <select class="form-control" v-model="id_pais" name="id_pais">
                                     <option>Seleccione una opción</option>
                                     <option>Colombia</option>
                                     <span class="help-block">(*) Seleccione el pais del autor</span>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" @click="regAutor" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -133,7 +133,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" @click="eliminarAutor" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -146,8 +146,63 @@
 
 <script>
     export default {
+
+
+        data(){
+            return{
+                arrayDatos:[],
+                nombre:'',
+                id_pais:''
+            }
+        },
+
+        methods: {
+            listAutor:function(){
+                let me = this;
+                var url="/autor";
+                axios.get(url).then(function(response){
+                    var respuesta = response.data;
+                    me.arrayDatos = respuesta.autores;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            regAutor(){
+                let me = this;
+                var url="/autor/registrar";
+                axios.post(url,{
+                    nombre: this.nombre,
+                    id_pais: this.id_pais
+                })
+                .then(function(response){
+                    me.listAutor();
+                    alert("se guardo correctamente");
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            },
+            eliminarAutor(data=[]){
+                let me = this;
+                var url="/autor/eliminar";
+                axios.post(url,{
+                    id:data['id']
+                })
+                .then(function(response){
+                    me.listAutor();
+                    alert('se elimino correctamente');
+                })
+                .catch(function(error){
+                    console.log(error);
+                }); 
+            },
+        },
+
+
         mounted() {
             console.log('Component mounted.')
+            this.listAutor();
         }
     }
 </script>

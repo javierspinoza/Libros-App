@@ -13,9 +13,11 @@ class CategoriaController extends Controller
         // GET para obtener
         // POST guardar en la bd
         // PUT actualizar o eliminar
-
-        $categorias= Categorias::all();
-        return $categorias;
+        
+        $categorias= Categorias::orderBy('nombre','asc')->get();
+        return [
+            'categorias'=>$categorias
+        ];
     }
 
     //guardar datos en la bd

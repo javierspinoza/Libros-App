@@ -14,8 +14,10 @@ class PaisController extends Controller
         // POST guardar en la bd
         // PUT actualizar o eliminar
 
-        $paises= Paises::all();
-        return $paises;
+        $paises= Paises::orderBy('nombre','asc')->get();
+        return [
+            'paises'=>$paises
+        ];
     }
 
     //guardar datos en la bd

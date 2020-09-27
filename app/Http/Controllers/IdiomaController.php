@@ -14,8 +14,10 @@ class IdiomaController extends Controller
         // POST guardar en la bd
         // PUT actualizar o eliminar
 
-        $idiomas= Idiomas::all();
-        return $idiomas;
+        $idiomas= Idiomas::orderBy('nombre','asc')->get();
+        return [
+            'idiomas'=>$idiomas
+        ];
     }
 
     //guardar datos en la bd

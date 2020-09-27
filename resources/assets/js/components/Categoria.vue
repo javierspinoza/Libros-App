@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-book"></i> Categoria
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                <button type="button" class="btn btn-primary" data-toggle="modal" @click="abrirModal ('guardar')">
                     <i class="icon-plus"></i>&nbsp;Agregar
                 </button>
             </div>
@@ -36,14 +36,14 @@
                             <th>Opciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Matematicas</td>
+                    <tbody> 
+                        <tr v-for="objeto in arrayDatos" :key="objeto.id">
+                            <td v-text="objeto.nombre"></td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" @click="abrirModal('editar',objeto)">
                                   <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" @click="eliminarCat(objeto)">
                                   <i class="icon-trash"></i>
                                 </button>
                             </td>                                                                        
@@ -77,12 +77,12 @@
         <!-- Fin ejemplo de tabla Listado -->
     </div>
     <!--Inicio del modal agregar/actualizar-->
-    <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="modalNuevo" :class="{'mostrar': modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-primary modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Agregar categoría</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h4 class="modal-title" v-text="titulo"></h4>
+                    <button type="button" class="close" @click="cerrarModal" aria-label="Close">
                       <span aria-hidden="true">X</span>
                     </button>
                 </div>
@@ -91,15 +91,16 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                             <div class="col-md-9">
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de categoría">
+                                <input type="text" v-model="nombre" id="nombre" name="nombre" class="form-control" placeholder="Nombre de categoría">
                                 <span class="help-block">(*) Ingrese el nombre de la categoría</span>
                             </div>
                         </div>                                
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" @click="cerrarModal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button v-show="accion==0" type="button" @click="regCat" class="btn btn-primary">Guardar</button>
+                    <button v-show="accion" type="button" @click="actCat" class="btn btn-primary">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -114,7 +115,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Eliminar Categoría</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
+                      <span aria-hidden="true">X</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -122,7 +123,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" @click="eliminarCat" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -135,8 +136,152 @@
 
 <script>
     export default {
+
+
+        data(){
+            return{
+                arrayDatos:[],
+                nombre:'',
+                idCat:0,
+                modal:0,
+                accion:0,
+                titulo:''
+            }
+        },
+
+        methods: {
+            listCat:function(){
+                let me = this;
+                var url="/categoria";
+                axios.get(url).then(function(response){
+                    var respuesta = response.data;
+                    me.arrayDatos = respuesta.categorias;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            regCat(){
+                let me = this;
+                var url="/categoria/registrar";
+                axios.post(url,{
+                    nombre: this.nombre
+                })
+                .then(function(response){
+                    me.listCat();
+                    me.mensaje('Se guardo correctamente');
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            },
+            actCat(){
+                let me = this;
+                var url="/categoria/actualizar";
+                axios.put(url,{
+                    id:this.idCat,
+                    nombre: this.nombre
+                })
+                .then(function(response){
+                    me.listCat();
+                    me.mensaje('Se actualizo correctamente');
+                    me.cerrarModal();
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            },
+            
+            eliminarCat(data=[]){
+                let me = this;
+
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "Se eliminaran los datos",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar!',
+                    confirmButtonText: 'Confirmar!'
+                    }).then((result) => {                        
+                    if (result.isConfirmed) {
+
+                        var url="/categoria/eliminar";
+                            axios.post(url,{
+                            id:data['id']
+                        })
+                        .then(function(response){
+                            me.listCat();
+                        })
+                            .catch(function(error){
+                            console.log(error);
+                        });
+
+                        // Swal.fire(
+                        // 'Deleted!',
+                        // 'Your file has been deleted.',
+                        // 'success'
+                        // )
+                    }
+                })
+                 
+            },
+            abrirModal(accion,data=[]){
+
+                switch (accion) {
+                    case 'guardar':
+                        this.titulo='Registrar categoria'
+                        this.accion=0;
+                        this.limpiar();
+                        break;
+                    case 'editar':
+                        this.titulo='Editar categoria'
+                        this.accion=1;
+                        this.idCat = data ['id'];
+                        this.nombre=data['nombre']
+                        break;
+                    default:
+                        break;
+                }
+                this.modal=1;
+            },
+            cerrarModal(){
+                this.modal=0;
+            },
+            limpiar(){
+                this.nombre='';
+            },
+            mensaje(msj){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: msj,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        },
+
+
         mounted() {
             console.log('Component mounted.')
+            this.listCat();
         }
     }
 </script>
+
+<style>
+
+.modal-content{
+    width: 100% !important;
+    position: absolute;
+}
+
+.mostrar{
+    display: list-item !important;
+    opacity: 1 !important;
+    position: absolute !important;
+}
+
+</style>

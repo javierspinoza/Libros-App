@@ -14,8 +14,10 @@ class AutorController extends Controller
         // POST guardar en la bd
         // PUT actualizar o eliminar
 
-        $autores= Autores::all();
-        return $autores;
+        $autores= Autores::orderBy('nombre','id_pais','asc')->get();
+        return [
+            'autores'=>$autores
+        ];
     }
 
     //guardar datos en la bd

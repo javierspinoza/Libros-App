@@ -37,13 +37,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Zuiza</td>
+                        <tr v-for="objeto in arrayDatos" :key="objeto.id">
+                            <td v-text="objeto.nombre"></td>
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
                                   <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" @click="eliminarPais(objeto)">
                                   <i class="icon-trash"></i>
                                 </button>
                             </td>                                                                        
@@ -91,7 +91,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                             <div class="col-md-9">
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de pais">
+                                <input type="text" v-model="nombre" id="nombre" name="nombre" class="form-control" placeholder="Nombre de pais">
                                 <span class="help-block">(*) Ingrese el nombre del pais</span>
                             </div>
                         </div>                                
@@ -99,7 +99,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" @click="regPais" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -122,7 +122,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" @click="eliminarPais" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -135,8 +135,61 @@
 
 <script>
     export default {
+
+
+        data(){
+            return{
+                arrayDatos:[],
+                nombre:''
+            }
+        },
+
+        methods: {
+            listPais:function(){
+                let me = this;
+                var url="/pais";
+                axios.get(url).then(function(response){
+                    var respuesta = response.data;
+                    me.arrayDatos = respuesta.paises;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            regPais(){
+                let me = this;
+                var url="/pais/registrar";
+                axios.post(url,{
+                    nombre: this.nombre
+                })
+                .then(function(response){
+                    me.listPais();
+                    alert("se guardo correctamente");
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            },
+            eliminarPais(data=[]){
+                let me = this;
+                var url="/pais/eliminar";
+                axios.post(url,{
+                    id:data['id']
+                })
+                .then(function(response){
+                    me.listPais();
+                    alert('se elimino correctamente');
+                })
+                .catch(function(error){
+                    console.log(error);
+                }); 
+            },
+        },
+
+
         mounted() {
             console.log('Component mounted.')
+            this.listPais();
         }
     }
 </script>

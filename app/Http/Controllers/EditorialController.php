@@ -14,8 +14,10 @@ class EditorialController extends Controller
         // POST guardar en la bd
         // PUT actualizar o eliminar
 
-        $editoriales= Editoriales::all();
-        return $editoriales;
+        $editoriales= Editoriales::orderBy('nombre','asc')->get();
+        return [
+            'editoriales'=>$editoriales
+        ];
     }
 
     //guardar datos en la bd

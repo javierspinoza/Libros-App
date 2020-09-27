@@ -36,13 +36,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Ingles</td>
+                        <tr v-for="objeto in arrayDatos" :key="objeto.id">
+                            <td v-text="objeto.nombre"></td>
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
                                   <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" @click="eliminarIdioma(objeto)">
                                   <i class="icon-trash"></i>
                                 </button>
                             </td>                                                                        
@@ -90,7 +90,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                             <div class="col-md-9">
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de idioma">
+                                <input type="text" v-model="nombre" id="nombre" name="nombre" class="form-control" placeholder="Nombre de idioma">
                                 <span class="help-block">(*) Ingrese el nombre del idioma</span>
                             </div>
                         </div>                                
@@ -98,7 +98,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" @click="regIdioma" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -121,7 +121,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" @click="eliminarIdioma" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -134,8 +134,61 @@
 
 <script>
     export default {
+
+
+        data(){
+            return{
+                arrayDatos:[],
+                nombre:''
+            }
+        },
+
+        methods: {
+            listIdioma:function(){
+                let me = this;
+                var url="/idioma";
+                axios.get(url).then(function(response){
+                    var respuesta = response.data;
+                    me.arrayDatos = respuesta.idiomas;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            regIdioma(){
+                let me = this;
+                var url="/idioma/registrar";
+                axios.post(url,{
+                    nombre: this.nombre
+                })
+                .then(function(response){
+                    me.listIdioma();
+                    alert("se guardo correctamente");
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            },
+            eliminarIdioma(data=[]){
+                let me = this;
+                var url="/idioma/eliminar";
+                axios.post(url,{
+                    id:data['id']
+                })
+                .then(function(response){
+                    me.listIdioma();
+                    alert('se elimino correctamente');
+                })
+                .catch(function(error){
+                    console.log(error);
+                }); 
+            },
+        },
+
+
         mounted() {
             console.log('Component mounted.')
+            this.listIdioma();
         }
     }
 </script>
