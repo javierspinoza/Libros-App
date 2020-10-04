@@ -8,14 +8,30 @@ use App\Editoriales;
 class EditorialController extends Controller
 {
     //mostrar datos de la tabla
-    public function index()
+    public function index(Request $request)
     {
+        $buscar=$request->nombre;
+        $criterio=$request->criterio;
+
+        if ($buscar=='') {
+            $editoriales= Editoriales::orderBy('nombre','asc')->paginate(7);
+        }else {
+            $editoriales= Editoriales::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(7);
+        }
+
         // GET para obtener
         // POST guardar en la bd
         // PUT actualizar o eliminar
 
-        $editoriales= Editoriales::orderBy('nombre','asc')->get();
         return [
+            'pagination'=>[
+                'total'=> $editoriales -> total(),
+                'current_page'=> $editoriales -> currentPage(),
+                'per_page'=> $editoriales -> perPage(),
+                'last_page'=> $editoriales -> lastPage(),
+                'from'=> $editoriales -> firstItem(),
+                'to'=> $editoriales -> lastItem(),
+            ],
             'editoriales'=>$editoriales
         ];
     }

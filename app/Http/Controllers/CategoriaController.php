@@ -8,14 +8,35 @@ use App\Categorias;
 class CategoriaController extends Controller
 {
     //mostrar datos de la tabla
-    public function index()
+    public function index(Request $request)
     {
+
+        $buscar=$request->nombre;
+        $criterio=$request->criterio;
+
+        if ($buscar=='') {
+            $categorias= Categorias::orderBy('nombre','asc')->paginate(4);
+        }else {
+            $categorias= Categorias::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(4);
+        }
+
+
         // GET para obtener
         // POST guardar en la bd
         // PUT actualizar o eliminar
         
-        $categorias= Categorias::orderBy('nombre','asc')->get();
+        
         return [
+
+            'pagination'=>[
+                'total'=> $categorias -> total(),
+                'current_page'=> $categorias -> currentPage(),
+                'per_page'=> $categorias -> perPage(),
+                'last_page'=> $categorias -> lastPage(),
+                'from'=> $categorias -> firstItem(),
+                'to'=> $categorias -> lastItem(),
+            ],
+
             'categorias'=>$categorias
         ];
     }

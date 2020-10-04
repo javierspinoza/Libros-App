@@ -8,14 +8,29 @@ use App\Idiomas;
 class IdiomaController extends Controller
 {
     //mostrar datos de la tabla
-    public function index()
+    public function index(Request $request)
     {
+        $buscar=$request->nombre;
+        $criterio=$request->criterio;
+
+        if ($buscar=='') {
+            $idiomas= Idiomas::orderBy('nombre','asc')->paginate(7);
+        }else {
+            $idiomas= Idiomas::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(7);
+        }
         // GET para obtener
         // POST guardar en la bd
         // PUT actualizar o eliminar
 
-        $idiomas= Idiomas::orderBy('nombre','asc')->get();
         return [
+            'pagination'=>[
+                'total'=> $idiomas -> total(),
+                'current_page'=> $idiomas -> currentPage(),
+                'per_page'=> $idiomas -> perPage(),
+                'last_page'=> $idiomas -> lastPage(),
+                'from'=> $idiomas -> firstItem(),
+                'to'=> $idiomas -> lastItem(),
+            ],
             'idiomas'=>$idiomas
         ];
     }
