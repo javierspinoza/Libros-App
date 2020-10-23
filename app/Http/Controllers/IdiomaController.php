@@ -16,7 +16,7 @@ class IdiomaController extends Controller
         if ($buscar=='') {
             $idiomas= Idiomas::orderBy('nombre','asc')->paginate(7);
         }else {
-            $idiomas= Idiomas::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(7);
+            $idiomas= Idiomas::where($criterio, 'like', '%'.$buscar. '%')->orderBy('nombre','asc')->paginate(7);
         }
         // GET para obtener
         // POST guardar en la bd
@@ -32,6 +32,15 @@ class IdiomaController extends Controller
                 'to'=> $idiomas -> lastItem(),
             ],
             'idiomas'=>$idiomas
+        ];
+    }
+    //es para mostrar los datos de las llaves foraneas
+    public function getIdiomas(Request $request)
+    {
+        $idiomas = Idiomas::select('id','nombre')
+            ->orderBy('nombre', 'asc')->get();
+        return [
+            'idiomas' => $idiomas
         ];
     }
 

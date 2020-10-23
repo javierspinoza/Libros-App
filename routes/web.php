@@ -39,6 +39,26 @@ Route::post('pais/registrar','PaisController@store');
 Route::put('pais/actualizar','PaisController@update');
 Route::post('pais/eliminar','PaisController@destroy');
 
+// Route::get('autor','AutorController@index');
+// Route::post('autor/registrar','AutorController@store');
+// Route::post('autor/eliminar','AutorController@destroy');
+
 Route::get('autor','AutorController@index');
-Route::post('autor/registrar','AutorController@store');
-Route::post('autor/eliminar','AutorController@destroy');
+        Route::get('selectPais','PaisController@getPais');
+        Route::post('autor/registrar','AutorController@store');
+        Route::put('autor/actualizar','AutorController@update');
+        Route::post('autor/eliminar','AutorController@destroy');
+
+Route::get('libro','LibroController@index');
+        Route::get('selectEditorial','EditorialController@getEditoriales');
+        Route::get('selectCategoria','CategoriaController@getCategorias');
+        Route::get('selectAutor','AutorController@getAutores');
+        Route::get('selectIdioma','IdiomaController@getIdiomas');
+        Route::post('libro/registrar','LibroController@store');
+        Route::put('libro/actualizar','LibroController@update');
+        Route::post('libro/eliminar','LibroController@destroy');
+
+Route::get('persona','PersonaController@index');
+        Route::post('persona/registrar','PersonaController@store');
+        Route::put('persona/actualizar','PersonaController@update');
+        Route::post('persona/eliminar','PersonaController@destroy');

@@ -9,7 +9,7 @@
     <div class="container-fluid">        
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-book"></i> Categoria
+                <i class="fa fa-book"></i> Persona
                 <button type="button" class="btn btn-primary" data-toggle="modal" @click="abrirModal ('guardar')">
                     <i class="icon-plus"></i>&nbsp;Agregar
                 </button>
@@ -19,7 +19,7 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <select class="form-control col-md-3" id="opcion" name="opcion">
-                              <option value="nombre">Nombre</option>
+                              <option value="nombres">Nombre</option>
                             </select>
                             <input type="text" id="texto" name="texto" v-model="buscar" class="form-control" placeholder="Texto a buscar">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -29,18 +29,26 @@
                 <table class="table table-bordered table-striped table-sm">
                     <thead>
                         <tr>
-                            <th>Nombre</th>                                  
+                            <th>Nombres</th>  
+                            <th>Apellidos</th>
+                            <th>Dirección</th>
+                            <th>Telefono</th> 
+                            <th>Email</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody> 
                         <tr v-for="objeto in arrayDatos" :key="objeto.id">
-                            <td v-text="objeto.nombre"></td>
+                            <td v-text="objeto.nombres"></td>
+                            <td v-text="objeto.apellidos"></td>
+                            <td v-text="objeto.dir"></td>
+                            <td v-text="objeto.tel"></td>
+                            <td v-text="objeto.email"></td>
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" @click="abrirModal('editar',objeto)">
                                   <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" @click="eliminarCat(objeto)">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" @click="eliminarPer(objeto)">
                                   <i class="icon-trash"></i>
                                 </button>
                             </td>                                                                        
@@ -78,18 +86,42 @@
                 <div class="modal-body">
                     <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="nombre" id="nombre" name="nombre" class="form-control" placeholder="Nombre de categoría">
-                                <span class="help-block">(*) Ingrese el nombre de la categoría</span>
+                            <label class="col-md-1 form-control-label" for="text-input">Nombres</label>
+                            <div class="col-md-5">
+                                <input type="text" v-model="nombres" id="nombres" name="nombres" class="form-control" placeholder="Nombre de la persona">
+                                <span class="help-block">(*) Ingrese el nombre de la persona</span>
                             </div>
-                        </div>                                
+                            <label class="col-md-1 form-control-label" for="text-input">Apellidos</label>
+                            <div class="col-md-5">
+                                <input type="text" v-model="apellidos" id="apellidos" name="apellidos" class="form-control" placeholder="Apellidos de la persona">
+                                <span class="help-block">(*) Ingrese apellidos de la persona</span>
+                            </div>
+                        </div> 
+                        <div class="form-group row">
+                            <label class="col-md-1 form-control-label" for="text-input">Dirección</label>
+                            <div class="col-md-5">
+                                <input type="text" v-model="dir" id="dir" name="dir" class="form-control" placeholder="Ingrese dirección">
+                                <span class="help-block">(*) Ingrese la dirección</span>
+                            </div>
+                            <label class="col-md-1 form-control-label" for="text-input">Telefono</label>
+                            <div class="col-md-5">
+                                <input type="text" v-model="tel" id="tel" name="tel" class="form-control" placeholder="Telefono de la persona">
+                                <span class="help-block">(*) Ingrese el telefono de la persona</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-1 form-control-label" for="text-input">Email</label>
+                            <div class="col-md-5">
+                                <input type="text" v-model="email" id="email" name="email" class="form-control" placeholder="Ingrese email">
+                                <span class="help-block">(*) Ingrese  email</span>
+                            </div>                               
+                        </div>                               
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" @click="cerrarModal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button v-show="accion==0" type="button" @click="regCat" class="btn btn-primary">Guardar</button>
-                    <button v-show="accion" type="button" @click="actCat" class="btn btn-primary">Actualizar</button>
+                    <button v-show="accion==0" type="button" @click="regPer" class="btn btn-primary">Guardar</button>
+                    <button v-show="accion" type="button" @click="actPer" class="btn btn-primary">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -102,17 +134,17 @@
         <div class="modal-dialog modal-danger" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Eliminar Categoría</h4>
+                    <h4 class="modal-title">Eliminar Persona</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">X</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Estas seguro de eliminar la categoría?</p>
+                    <p>Estas seguro de eliminar la Persona?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" @click="eliminarCat" class="btn btn-danger">Eliminar</button>
+                    <button type="button" @click="eliminarPer" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -130,8 +162,12 @@
         data(){
             return{
                 arrayDatos:[],
-                nombre:'',
-                idCat:0,                
+                nombres:'',
+                apellidos:'',
+                tel:'',
+                dir:'',
+                email:'',
+                idPer:0,                
                 modal:0,
                 accion:0,
                 titulo:'',
@@ -157,44 +193,52 @@
                 //va a la pag actual
                 me.pagination.current_page= page;
                 //envia el metodo para traer los datos
-                me.listCat(page,criterio,buscar);
+                me.listPer(page,criterio,buscar);
             },
 
-            listCat:function(page,criterio,buscar){
+            listPer:function(page,criterio,buscar){
                 let me = this;
-                var url="/categoria?page="+ page + '&criterio='+criterio +'&buscar='+ buscar;
+                var url="/persona?page="+ page + '&criterio='+criterio +'&buscar='+ buscar;
                 axios.get(url).then(function(response){
                     var respuesta = response.data;
-                    me.arrayDatos = respuesta.categorias.data;
+                    me.arrayDatos = respuesta.personas.data;
                     me.pagination = respuesta.pagination;
                 })
                 .catch(function(error){
                     console.log(error);
                 })
             },
-            regCat(){
+            regPer(){
                 let me = this;
-                var url="/categoria/registrar";
+                var url="/persona/registrar";
                 axios.post(url,{
-                    nombre: this.nombre
+                    nombres: this.nombres,
+                    apellidos: this.apellidos,
+                    dir: this.dir,
+                    tel: this.tel,
+                    email: this.email
                 })
                 .then(function(response){
-                    me.listCat();
+                    me.listPer();
                     me.mensaje('Se guardo correctamente');
                 })
                 .catch(function(error){
                     console.log(error);
                 });
             },
-            actCat(){
+            actPer(){
                 let me = this;
-                var url="/categoria/actualizar";
+                var url="/persona/actualizar";
                 axios.put(url,{
-                    id:this.idCat,
-                    nombre: this.nombre
+                    id:this.idPer,
+                    nombres: this.nombres,
+                    apellidos: this.apellidos,
+                    dir: this.dir,
+                    tel: this.tel,
+                    email: this.email
                 })
                 .then(function(response){
-                    me.listCat();
+                    me.listPer();
                     me.mensaje('Se actualizo correctamente');
                     me.cerrarModal();
                 })
@@ -203,7 +247,7 @@
                 });
             },
             
-            eliminarCat(data=[]){
+            eliminarPer(data=[]){
                 let me = this;
 
                 Swal.fire({
@@ -218,12 +262,12 @@
                     }).then((result) => {                        
                     if (result.isConfirmed) {
 
-                        var url="/categoria/eliminar";
+                        var url="/persona/eliminar";
                             axios.post(url,{
                             id:data['id']
                         })
                         .then(function(response){
-                            me.listCat();
+                            me.listPer();
                         })
                             .catch(function(error){
                             console.log(error);
@@ -235,15 +279,19 @@
 
                 switch (accion) {
                     case 'guardar':
-                        this.titulo='Registrar categoria'
+                        this.titulo='Registrar persona'
                         this.accion=0;
                         this.limpiar();
                         break;
                     case 'editar':
-                        this.titulo='Editar categoria'
+                        this.titulo='Editar persona'
                         this.accion=1;
-                        this.idCat = data ['id'];
-                        this.nombre=data['nombre']
+                        this.idPer = data ['id'];
+                        this.nombres=data['nombres'];
+                        this.apellidos=data['apellidos'];
+                        this.dir=data['dir'];
+                        this.tel=data['tel'];
+                        this.email=data['email']
                         break;
                     default:
                         break;
@@ -254,7 +302,11 @@
                 this.modal=0;
             },
             limpiar(){
-                this.nombre='';
+                this.nombres='';
+                this.apellidos='';
+                this.dir='';
+                this.tel='';
+                this.email='';
             },
             mensaje(msj){
                 Swal.fire({
@@ -297,7 +349,7 @@
 
         mounted() {
             console.log('Component mounted.')
-            this.listCat(1,this.criterio,this.buscar);
+            this.listPer(1,this.criterio,this.buscar);
         }
     }
 </script>

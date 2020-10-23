@@ -16,7 +16,7 @@ class PaisController extends Controller
         if ($buscar=='') {
             $paises= Paises::orderBy('nombre','asc')->paginate(6);
         }else {
-            $paises= Paises::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(6);
+            $paises= Paises::where($criterio, 'like', '%'.$buscar. '%')->orderBy('nombre','asc')->paginate(6);
         }
         // GET para obtener
         // POST guardar en la bd
@@ -33,6 +33,13 @@ class PaisController extends Controller
             ],
             'paises'=>$paises
         ];
+    }
+    public function getPais(Request $request)
+    {
+        $paises = Paises::select('id','nombre')
+            ->orderBy('nombre', 'asc')->get();
+        return [
+            'paises' => $paises];
     }
 
     //guardar datos en la bd

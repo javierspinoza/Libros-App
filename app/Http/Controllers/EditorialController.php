@@ -16,7 +16,7 @@ class EditorialController extends Controller
         if ($buscar=='') {
             $editoriales= Editoriales::orderBy('nombre','asc')->paginate(7);
         }else {
-            $editoriales= Editoriales::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(7);
+            $editoriales= Editoriales::where($criterio, 'like', '%'.$buscar. '%')->orderBy('nombre','asc')->paginate(7);
         }
 
         // GET para obtener
@@ -33,6 +33,15 @@ class EditorialController extends Controller
                 'to'=> $editoriales -> lastItem(),
             ],
             'editoriales'=>$editoriales
+        ];
+    }
+    //muestra los datos en las llaves foraneas
+    public function getEditoriales(Request $request)
+    {
+        $editoriales = Editoriales::select('id','nombre')
+            ->orderBy('nombre', 'asc')->get();
+        return [
+            'editoriales' => $editoriales
         ];
     }
 

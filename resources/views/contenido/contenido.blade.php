@@ -28,7 +28,25 @@
 
     <template v-if="menu==5">
 
-        <pais></pais>>
+        <pais></pais>
+        
+    </template>
+
+    <template v-if="menu==6">
+
+        <libro></libro>
+        
+    </template>
+
+    <template v-if="menu==7">
+
+        <prestamo></prestamo>
+        
+    </template>
+
+    <template v-if="menu==8">
+
+        <persona></persona>
         
     </template>
 

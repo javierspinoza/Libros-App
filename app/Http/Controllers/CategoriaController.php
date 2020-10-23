@@ -17,13 +17,13 @@ class CategoriaController extends Controller
         if ($buscar=='') {
             $categorias= Categorias::orderBy('nombre','asc')->paginate(4);
         }else {
-            $categorias= Categorias::where($criterio, 'like', '%'.$buscar. '%')-orderby('nombre','asc')->paginate(4);
+            $categorias= Categorias::where($criterio, 'like', '%'.$buscar. '%')->orderBy('nombre','asc')->paginate(4);
         }
 
 
         // GET para obtener
         // POST guardar en la bd
-        // PUT actualizar o eliminar
+        // PUT actualizar o eliminar.
         
         
         return [
@@ -38,6 +38,15 @@ class CategoriaController extends Controller
             ],
 
             'categorias'=>$categorias
+        ];
+    }
+    //trae los datos de las llaves foraneas
+    public function getCategorias(Request $request)
+    {
+        $categorias = Categorias::select('id','nombre')
+            ->orderBy('nombre', 'asc')->get();
+        return [
+            'categorias' => $categorias
         ];
     }
 
