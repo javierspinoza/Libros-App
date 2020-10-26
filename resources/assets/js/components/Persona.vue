@@ -32,7 +32,7 @@
                             <th>Nombres</th>  
                             <th>Apellidos</th>
                             <th>Dirección</th>
-                            <th>Telefono</th> 
+                            <th>Teléfono</th> 
                             <th>Email</th>
                             <th>Opciones</th>
                         </tr>
@@ -103,10 +103,10 @@
                                 <input type="text" v-model="dir" id="dir" name="dir" class="form-control" placeholder="Ingrese dirección">
                                 <span class="help-block">(*) Ingrese la dirección</span>
                             </div>
-                            <label class="col-md-1 form-control-label" for="text-input">Telefono</label>
+                            <label class="col-md-1 form-control-label" for="text-input">Teléfono</label>
                             <div class="col-md-5">
-                                <input type="text" v-model="tel" id="tel" name="tel" class="form-control" placeholder="Telefono de la persona">
-                                <span class="help-block">(*) Ingrese el telefono de la persona</span>
+                                <input type="text" v-model="tel" id="tel" name="tel" class="form-control" placeholder="Teléfono de la persona">
+                                <span class="help-block">(*) Ingrese el teléfono de la persona</span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -221,6 +221,7 @@
                 .then(function(response){
                     me.listPer();
                     me.mensaje('Se guardo correctamente');
+                    me.cerrarModal();
                 })
                 .catch(function(error){
                     console.log(error);
@@ -252,7 +253,7 @@
 
                 Swal.fire({
                     title: 'Estas seguro?',
-                    text: "Se eliminaran los datos",
+                    text: "Se eliminaran los datos "+data['nombres'],
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

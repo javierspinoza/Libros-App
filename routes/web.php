@@ -59,6 +59,9 @@ Route::get('libro','LibroController@index');
         Route::post('libro/eliminar','LibroController@destroy');
 
 Route::get('persona','PersonaController@index');
+        Route::get('selectPersona','PersonaController@getPersonas');
         Route::post('persona/registrar','PersonaController@store');
         Route::put('persona/actualizar','PersonaController@update');
         Route::post('persona/eliminar','PersonaController@destroy');
+
+Route::get('solicitud','Solicitud_librosController@index');

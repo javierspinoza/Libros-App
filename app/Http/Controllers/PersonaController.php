@@ -41,9 +41,9 @@ class PersonaController extends Controller
         ];
     }
     //trae los datos de las llaves foraneas
-    public function getPeronas(Request $request)
+    public function getPersonas(Request $request)
     {
-        $personas = Personas::select('id','nombres')
+        $personas = Personas::select('id','nombres','apellidos','nomCom')
             ->orderBy('nombres', 'asc')->get();
         return [
             'personas' => $personas

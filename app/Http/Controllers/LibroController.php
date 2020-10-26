@@ -9,8 +9,8 @@ class LibroController extends Controller
 {
     public function index(Request $request)
     {
-        $buscar=$request->nombre;
-        $criterio=$request->criterio;
+        $buscar=$request->buscar;
+        // $criterio=$request->criterio;
         $libros = Libros::orderBy('nombre', 'asc')->get();
 
         if($buscar == ''){
@@ -20,7 +20,7 @@ class LibroController extends Controller
             ->join('idiomas','libros.id_idioma','=','idiomas.id')
             ->select('libros.id','libros.nombre','libros.codigo','libros.cant','libros.ano_publi',
             'libros.num_pag','libros.ubicacion','libros.edicion','editoriales.nombre as nomEditorial',
-            'categorias.nombre as nomCategoria','autores.nombre as nomAutor','idiomas.nombre as nomIdioma')
+            'categorias.nombre as nomCategoria','autores.nombre as nomAutor','idiomas.nombre as nomIdioma')            
             ->orderBy('nombre','asc')->paginate(4);
         } else {$libros=Libros::join('editoriales','libros.id_editorial','=','editoriales.id')
             ->join('categorias','libros.id_categoria','=','categorias.id')
@@ -28,7 +28,9 @@ class LibroController extends Controller
             ->join('idiomas','libros.id_idioma','=','idiomas.id')
             ->select('libros.id','libros.nombre','libros.codigo','libros.cant','libros.ano_publi',
             'libros.num_pag','libros.ubicacion','libros.edicion','editoriales.nombre as nomEditorial',
-            'categorias.nombre as nomCategoria','autores.nombre as nomAutor','idiomas.nombre as nomIdioma')->orderBy('nombre','asc')->paginate(4);
+            'categorias.nombre as nomCategoria','autores.nombre as nomAutor','idiomas.nombre as nomIdioma')
+            ->where('libros.nombre', 'like', '%'.$buscar. '%')//para buscar por nombre en la vista del maestro detalle
+            ->orderBy('nombre','asc')->paginate(4);
         }
         return [
 
