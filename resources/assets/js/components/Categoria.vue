@@ -124,6 +124,7 @@
 </template>
 
 <script>
+    import { required, minLength, between } from 'vuelidate/lib/validators'
     export default {
 
 
@@ -148,6 +149,9 @@
                 buscar:'',
                 criterio:'nombre',
             }
+        },
+        validation:{
+
         },
 
         methods: {

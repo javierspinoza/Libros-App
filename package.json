@@ -18,5 +18,11 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "vue-multiselect": "^2.1.6",
+        "vue-select": "^3.10.8",
+        "vue-toasted": "^1.1.28",
+        "vuelidate": "^0.7.6"
     }
 }

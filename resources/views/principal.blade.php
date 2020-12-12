@@ -59,14 +59,19 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="img/avatars/6.jpg" class="img-avatar" alt="adsi@.com.co">
-                    <span class="d-md-down-none">Javier </span>
+                    <span class="d-md-down-none">{{Auth::user()->usuario}} </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
                         <strong>Cuenta</strong>
                     </div>
-                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Cerrar sesión</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa fa-lock"></i> Cerrar sesión</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
             </li>
         </ul>        
@@ -74,11 +79,18 @@
 
     <div class="app-body" >
         
-        
+        @if(Auth::check())
+            @if (Auth::user()->id_rol == 1)
+                @include('plantilla.sidebaradministrador')
+            @elseif (Auth::user()->id_rol == 2)
+                @include('plantilla.sidebarregistrador')
+            @else
+
+            @endif
+
+        @endif
 
         <!-- Contenido Principal -->
-
-        @include('plantilla.sidebar')
 
         @yield('contenido')
         <!-- /Fin del contenido principal -->
@@ -95,7 +107,9 @@
 
     <script src="js/app.js"></script>
     <script src="js/plantilla.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 </body>
 
 </html>

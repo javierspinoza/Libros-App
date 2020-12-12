@@ -9,7 +9,7 @@ class LibroController extends Controller
 {
     public function index(Request $request)
     {
-        $buscar=$request->buscar;
+        $buscar=$request->nombre;
         // $criterio=$request->criterio;
         $libros = Libros::orderBy('nombre', 'asc')->get();
 
@@ -30,6 +30,7 @@ class LibroController extends Controller
             'libros.num_pag','libros.ubicacion','libros.edicion','editoriales.nombre as nomEditorial',
             'categorias.nombre as nomCategoria','autores.nombre as nomAutor','idiomas.nombre as nomIdioma')
             ->where('libros.nombre', 'like', '%'.$buscar. '%')//para buscar por nombre en la vista del maestro detalle
+            ->orwhere('libros.codigo', 'like', '%'.$buscar. '%')
             ->orderBy('nombre','asc')->paginate(4);
         }
         return [
@@ -48,8 +49,15 @@ class LibroController extends Controller
     }
     public function getLibros(Request $request)
     {
-        $libros = Libros::select('id','nombre')
-            ->orderBy('nombre', 'asc')->get();
+        $buscar=$request->buscar;
+
+        $libros = Libros::join('editoriales','libros.id_editorial','=','editoriales.id')
+        ->join('autores','libros.id_autor','=','autores.id')
+        ->select('libros.id','libros.codigo','libros.nombre','autores.nombre as nomAutor','editoriales.nombre as nomEditorial')
+        ->where('libros.codigo', $buscar)
+        ->orwhere('libros.nombre', 'like', '%'.$buscar. '%')
+        ->orderBy('libros.nombre', 'asc')->take(1)->get();
+
         return [
             'libros' => $libros
         ];

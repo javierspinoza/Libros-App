@@ -3,81 +3,75 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Personas;
+//use Illuminate\Support\Facades\DB;
+use App\Persona;
 
 class PersonaController extends Controller
 {
-    //mostrar datos de la tabla
     public function index(Request $request)
     {
+        if (!$request->ajax()) return redirect('/');
 
-        $buscar=$request->nombres;
-        $criterio=$request->criterio;
-
-        if ($buscar=='') {
-            $personas= Personas::orderBy('nombres','asc')->paginate(4);
-        }else {
-            $personas= Personas::where($criterio, 'like', '%'.$buscar. '%')->orderBy('nombres','asc')->paginate(4);
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+        
+        if ($buscar==''){
+            $personas = Persona::orderBy('id', 'desc')->paginate(3);
         }
-
-
-        // GET para obtener
-        // POST guardar en la bd
-        // PUT actualizar o eliminar.
+        else{
+            $personas = Persona::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(3);
+        }
         
-        
+
         return [
-
-            'pagination'=>[
-                'total'=> $personas -> total(),
-                'current_page'=> $personas -> currentPage(),
-                'per_page'=> $personas -> perPage(),
-                'last_page'=> $personas -> lastPage(),
-                'from'=> $personas -> firstItem(),
-                'to'=> $personas -> lastItem(),
+            'pagination' => [
+                'total'        => $personas->total(),
+                'current_page' => $personas->currentPage(),
+                'per_page'     => $personas->perPage(),
+                'last_page'    => $personas->lastPage(),
+                'from'         => $personas->firstItem(),
+                'to'           => $personas->lastItem(),
             ],
-
-            'personas'=>$personas
+            'personas' => $personas
         ];
     }
-    //trae los datos de las llaves foraneas
-    public function getPersonas(Request $request)
+
+    public function getPersona(Request $request)
     {
-        $personas = Personas::select('id','nombres','apellidos','nomCom')
+        $personas = Persona::select('id','nombres', 'nomComp')
             ->orderBy('nombres', 'asc')->get();
         return [
             'personas' => $personas
         ];
     }
 
-    //guardar datos en la bd
     public function store(Request $request)
     {
-        $personas= new Personas();
-        $personas->nombres = $request->nombres;
-        $personas->apellidos = $request->apellidos;
-        $personas->dir = $request->dir;
-        $personas->tel = $request->tel;
-        $personas->email = $request->email;
-        $personas->save();
-    }
-    
-    //actualizar datos
-    public function update(Request $request)
-    {
-        $personas= Personas::findOrfail($request->id);
-        $personas->nombres = $request->nombres;
-        $personas->apellidos = $request->apellidos;
-        $personas->dir = $request->dir;
-        $personas->tel = $request->tel;
-        $personas->email = $request->email;
-        $personas->save();
+        if (!$request->ajax()) return redirect('/');
+        $persona = new Persona();
+        $persona->nombres = $request->nombres;
+        $persona->apellidos = $request->apellidos;
+        $persona->dir = $request->dir;
+        $persona->tel = $request->tel;
+        $persona->email = $request->email;
+        $persona->save();
     }
 
-    //eliminar datos
+    public function update(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $persona = Persona::findOrFail($request->id);
+        $persona->nombres = $request->nombres;
+        $persona->apellidos = $request->apellidos;
+        $persona->dir = $request->dir;
+        $persona->tel = $request->tel;
+        $persona->email = $request->email;
+        $persona->save();
+    }
+
     public function destroy(Request $request)
     {
-        $personas= Personas::findOrfail($request->id);
-        $personas->delete();
+        $persona= Persona::findOrfail($request->id);
+        $persona->delete();
     }
 }

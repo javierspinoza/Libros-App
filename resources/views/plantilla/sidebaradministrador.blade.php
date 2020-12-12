@@ -34,16 +34,27 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Registro</a>
                 <ul class="nav-dropdown-items">
                     <li @click="menu=6" class="nav-item">
-                        <a class="nav-link" href="i#"><i class="icon-wallet"></i> Libros</a>
+                        <a class="nav-link" href="#"><i class="icon-wallet"></i> Libros</a>
                     </li>
                     <li @click="menu=7" class="nav-item">
-                        <a class="nav-link" href="i#"><i class="icon-wallet"></i> Solicitud Libro</a>
+                        <a class="nav-link" href="#"><i class="icon-wallet"></i> Solicitud Libro</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-notebook"></i> Otros</a>
                     </li>
                 </ul>
-            </li>                    
+            </li>  
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Acceso</a>
+                <ul class="nav-dropdown-items">
+                    <li @click="menu=9" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-wallet"></i> Roles</a>
+                    </li>
+                    <li @click="menu=10" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-wallet"></i> Usuarios</a>
+                    </li>
+                </ul>
+            </li>                  
             <li class="nav-item">
                 <a class="nav-link" href="main.html"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
             </li>

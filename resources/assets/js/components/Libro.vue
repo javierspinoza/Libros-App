@@ -111,7 +111,7 @@
                         <div class="form-group row">                            
                             <label class="col-md-1 form-control-label" for="text-input">Cantidad</label>                            
                             <div class="col-md-5">
-                                <input type="text" v-model="cant" id="cant" name="cant" class="form-control" placeholder="Ingrese la cantidad">
+                                <input type="number" v-model="cant" id="cant" name="cant" class="form-control" placeholder="Ingrese la cantidad">
                             </div>
                             <label class="col-md-1 form-control-label" for="text-input">Año public</label>                            
                             <div class="col-md-5">
@@ -247,22 +247,22 @@
                 },
                 offset:3,
                 buscar:'',
-                criterio:'nombre'
+                // criterio:'nombre'
             }
         },
 
         methods: {
-            cambiarPagina(page,buscar,criterio){
+            cambiarPagina(page,buscar){
                 let me = this;
                 //va a la pagina actual
                 me.pagination.current_page = page;
                 //envia al metodo para traer los datos
-                me.listLibro(page,criterio,buscar);
+                me.listLibro(page,buscar);
             },
             
-            listLibro:function(page,criterio,buscar){
+            listLibro:function(page,buscar){
                 let me = this;
-                var url = "/libro?page="+ page+ '&criterio='+criterio+ '&buscar='+buscar;
+                var url = "/libro?page="+ page+  '&buscar='+buscar;
                 axios.get(url).then(function(response){
                     var respuesta = response.data;
                     me.arrayDatos = respuesta.libros.data;
@@ -483,7 +483,7 @@
             this.getCategorias();         
             this.getAutores();         
             this.getIdiomas();         
-            this.listLibro(1,this.criterio,this.buscar);
+            this.listLibro(1,this.buscar);
         }
     }
 </script>
